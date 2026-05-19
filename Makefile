@@ -19,7 +19,7 @@ help:
 
 up:
 	@echo "🚀 Iniciando containers..."
-	docker-compose up -d
+	docker compose up -d
 	@echo "✓ Containers iniciados"
 	@echo "📌 Mockoon API: http://localhost:3000"
 	@echo "📌 Swagger UI: http://localhost:8080"
@@ -28,24 +28,24 @@ up:
 
 down:
 	@echo "🛑 Parando containers..."
-	docker-compose down
+	docker compose down
 	@echo "✓ Containers parados"
 
 logs:
 	@echo "📋 Exibindo logs (Ctrl+C para sair)..."
-	docker-compose logs -f mockoon-api
+	docker compose logs -f mockoon-api
 
 logs-test:
 	@echo "📋 Exibindo logs dos testes..."
-	docker-compose logs test-runner
+	docker compose logs test-runner
 
 logs-swagger:
 	@echo "📋 Exibindo logs do Swagger UI..."
-	docker-compose logs swagger-ui
+	docker compose logs swagger-ui
 
 test:
 	@echo "🧪 Executando testes automatizados..."
-	docker-compose up --abort-on-container-exit test-runner
+	docker compose up --abort-on-container-exit test-runner
 	@echo "✓ Testes finalizados"
 
 test-local:
@@ -55,27 +55,27 @@ test-local:
 
 clean:
 	@echo "🧹 Limpando containers e volumes..."
-	docker-compose down -v
+	docker compose down -v
 	@echo "✓ Limpeza concluída"
 
 rebuild:
 	@echo "🔄 Reconstruindo containers..."
-	docker-compose down
-	docker-compose build --no-cache
-	docker-compose up -d
+	docker compose down
+	docker compose build --no-cache
+	docker compose up -d
 	@echo "✓ Rebuild concluído"
 
 stop:
 	@echo "⏸️  Parando containers..."
-	docker-compose stop
+	docker compose stop
 
 start:
 	@echo "▶️  Iniciando containers..."
-	docker-compose start
+	docker compose start
 
 status:
 	@echo "📊 Status dos serviços:"
-	@docker-compose ps
+	@docker compose ps
 
 health:
 	@echo "❤️  Verificando saúde da API..."
@@ -105,7 +105,7 @@ curl-test:
 
 shell:
 	@echo "🐚 Abrindo shell no container Mockoon..."
-	docker-compose exec mockoon-api sh
+	docker compose exec mockoon-api sh
 
 view-reports:
 	@echo "📊 Abrindo relatórios de teste..."
@@ -123,12 +123,12 @@ info:
 	@echo "🎯 Mockoon: mockoon-environment.json"
 	@echo "🧪 Testes: test-cases.json"
 	@echo "📄 Testes: tests/run-tests.js"
-	@echo "🐳 Docker: docker-compose.yml"
+	@echo "🐳 Docker: docker compose.yml"
 	@echo "════════════════════════════════════════"
 
 version:
 	@echo "Verificando versões dos serviços..."
 	@docker --version
-	@docker-compose --version
+	@docker compose --version
 	@echo ""
-	@docker-compose images
+	@docker compose images

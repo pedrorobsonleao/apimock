@@ -13,10 +13,56 @@
     {
       "uuid": "route-auth-login",
       "type": "http",
-      "documentation": "Autenticação do usuário",
+      "documentation": "Autentica\u00e7\u00e3o do usu\u00e1rio",
       "method": "post",
       "endpoint": "/login",
       "responses": [
+        {
+          "uuid": "response-login-bad-request",
+          "body": "{\n  \"error\": \"Bad Request\",\n  \"message\": \"Username e password s\u00e3o obrigat\u00f3rios\"\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad Request",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "username",
+              "value": "^$",
+              "invert": false,
+              "operator": "regex"
+            }
+          ]
+        },
+        {
+          "uuid": "response-login-error",
+          "body": "{\n  \"error\": \"Credenciais inv\u00e1lidas\",\n  \"message\": \"Username ou password incorretos\"\n}",
+          "latency": 500,
+          "statusCode": 401,
+          "label": "Invalid Credentials",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "password",
+              "value": "^(?!password123$).*$",
+              "invert": false,
+              "operator": "regex"
+            }
+          ]
+        },
         {
           "uuid": "response-login-success",
           "body": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"type\": \"Bearer\",\n  \"expiresIn\": 3600\n}",
@@ -29,21 +75,8 @@
               "value": "application/json"
             }
           ],
-          "bodyType": "INLINE"
-        },
-        {
-          "uuid": "response-login-error",
-          "body": "{\n  \"error\": \"Credenciais inválidas\",\n  \"message\": \"Username ou password incorretos\"\n}",
-          "latency": 500,
-          "statusCode": 401,
-          "label": "Invalid Credentials",
-          "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
-          ],
-          "bodyType": "INLINE"
+          "bodyType": "INLINE",
+          "default": true
         }
       ]
     },
@@ -55,11 +88,258 @@
       "endpoint": "/pessoa",
       "responses": [
         {
+          "uuid": "response-pessoa-list-forbidden",
+          "body": "{\n  \"error\": \"Forbidden\",\n  \"message\": \"Voc\u00ea n\u00e3o tem permiss\u00e3o para acessar este recurso\"\n}",
+          "latency": 50,
+          "statusCode": 403,
+          "label": "Access Forbidden",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "rules": [
+            {
+              "target": "header",
+              "modifier": "Authorization",
+              "value": "^Bearer .+$",
+              "invert": true,
+              "operator": "regex"
+            }
+          ]
+        },
+        {
           "uuid": "response-pessoa-list-success",
-          "body": "[\n  {\n    \"id\": 1,\n    \"nome\": \"João Silva\"\n  },\n  {\n    \"id\": 2,\n    \"nome\": \"Maria Santos\"\n  },\n  {\n    \"id\": 3,\n    \"nome\": \"Pedro Oliveira\"\n  },\n  {\n    \"id\": 4,\n    \"nome\": \"Ana Costa\"\n  },\n  {\n    \"id\": 5,\n    \"nome\": \"Carlos Ferreira\"\n  }\n]",
+          "body": "[\n  {\n    \"id\": 1,\n    \"nome\": \"Jo\u00e3o Silva\"\n  },\n  {\n    \"id\": 2,\n    \"nome\": \"Maria Santos\"\n  },\n  {\n    \"id\": 3,\n    \"nome\": \"Pedro Oliveira\"\n  },\n  {\n    \"id\": 4,\n    \"nome\": \"Ana Costa\"\n  },\n  {\n    \"id\": 5,\n    \"nome\": \"Carlos Ferreira\"\n  }\n]",
           "latency": 100,
           "statusCode": 200,
           "label": "List Success",
           "headers": [
             {
-              "key": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        },\n        {\n          \"uuid\": \"response-pessoa-list-forbidden\",\n          \"body\": \"{\n  \\\"error\\\": \\\"Forbidden\\\",\n  \\\"message\\\": \\\"Você não tem permissão para acessar este recurso\\\"\n}\",\n          \"latency\": 50,\n          \"statusCode\": 403,\n          \"label\": \"Access Forbidden\",\n          \"headers\": [\n            {\n              \"key\": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        },\n        {\n          \"uuid\": \"response-pessoa-list-error\",\n          \"body\": \"{\n  \\\"error\\\": \\\"Internal Server Error\\\",\n  \\\"message\\\": \\\"Foi gerada uma exceção no servidor\\\",\n  \\\"timestamp\\\": \\\"2026-05-19T15:14:09Z\\\"\n}\",\n          \"latency\": 300,\n          \"statusCode\": 500,\n          \"label\": \"Server Error\",\n          \"headers\": [\n            {\n              \"key\": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        }\n      ]\n    },\n    {\n      \"uuid\": \"route-pessoa-create\",\n      \"type\": \"http\",\n      \"documentation\": \"Cria uma nova pessoa\",\n      \"method\": \"post\",\n      \"endpoint\": \"/pessoa\",\n      \"responses\": [\n        {\n          \"uuid\": \"response-pessoa-create-success\",\n          \"body\": \"{\n  \\\"id\\\": 6,\n  \\\"nome\\\": \\\"Novo Usuário\\\"\n}\",\n          \"latency\": 150,\n          \"statusCode\": 200,\n          \"label\": \"Created Success\",\n          \"headers\": [\n            {\n              \"key\": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        },\n        {\n          \"uuid\": \"response-pessoa-create-error\",\n          \"body\": \"{\n  \\\"error\\\": \\\"Validation Error\\\",\n  \\\"message\\\": \\\"O nome deve ter entre 3 e 255 caracteres\\\"\n}\",\n          \"latency\": 100,\n          \"statusCode\": 400,\n          \"label\": \"Validation Error\",\n          \"headers\": [\n            {\n              \"key\": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        }\n      ]\n    },\n    {\n      \"uuid\": \"route-pessoa-getbyid\",\n      \"type\": \"http\",\n      \"documentation\": \"Retorna uma pessoa específica\",\n      \"method\": \"get\",\n      \"endpoint\": \"/pessoa/:id\",\n      \"responses\": [\n        {\n          \"uuid\": \"response-pessoa-getbyid-success\",\n          \"body\": \"{\n  \\\"id\\\": 1,\n  \\\"nome\\\": \\\"João Silva\\\"\n}\",\n          \"latency\": 80,\n          \"statusCode\": 200,\n          \"label\": \"Found Success\",\n          \"headers\": [\n            {\n              \"key\": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        },\n        {\n          \"uuid\": \"response-pessoa-getbyid-notfound\",\n          \"body\": \"{\n  \\\"error\\\": \\\"Not Found\\\",\n  \\\"message\\\": \\\"Pessoa com id 999 não encontrada\\\"\n}\",\n          \"latency\": 50,\n          \"statusCode\": 404,\n          \"label\": \"Not Found\",\n          \"headers\": [\n            {\n              \"key\": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        }\n      ]\n    },\n    {\n      \"uuid\": \"route-pessoa-update\",\n      \"type\": \"http\",\n      \"documentation\": \"Atualiza uma pessoa\",\n      \"method\": \"put\",\n      \"endpoint\": \"/pessoa/:id\",\n      \"responses\": [\n        {\n          \"uuid\": \"response-pessoa-update-success\",\n          \"body\": \"{\n  \\\"id\\\": 1,\n  \\\"nome\\\": \\\"João Silva Atualizado\\\"\n}\",\n          \"latency\": 120,\n          \"statusCode\": 200,\n          \"label\": \"Updated Success\",\n          \"headers\": [\n            {\n              \"key\": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        },\n        {\n          \"uuid\": \"response-pessoa-update-notfound\",\n          \"body\": \"{\n  \\\"error\\\": \\\"Not Found\\\",\n  \\\"message\\\": \\\"Pessoa com id 999 não encontrada\\\"\n}\",\n          \"latency\": 50,\n          \"statusCode\": 404,\n          \"label\": \"Not Found\",\n          \"headers\": [\n            {\n              \"key\": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        }\n      ]\n    },\n    {\n      \"uuid\": \"route-pessoa-delete\",\n      \"type\": \"http\",\n      \"documentation\": \"Deleta uma pessoa\",\n      \"method\": \"delete\",\n      \"endpoint\": \"/pessoa/:id\",\n      \"responses\": [\n        {\n          \"uuid\": \"response-pessoa-delete-success\",\n          \"body\": \"\",\n          \"latency\": 100,\n          \"statusCode\": 200,\n          \"label\": \"Deleted Success\",\n          \"headers\": [],\n          \"bodyType\": \"INLINE\"\n        },\n        {\n          \"uuid\": \"response-pessoa-delete-notfound\",\n          \"body\": \"{\n  \\\"error\\\": \\\"Not Found\\\",\n  \\\"message\\\": \\\"Pessoa com id 999 não encontrada\\\"\n}\",\n          \"latency\": 50,\n          \"statusCode\": 404,\n          \"label\": \"Not Found\",\n          \"headers\": [\n            {\n              \"key\": \"Content-Type\",\n              \"value\": \"application/json\"\n            }\n          ],\n          \"bodyType\": \"INLINE\"\n        }\n      ]\n    }\n  ],\n  \"proxyMode\": false,\n  \"proxySettings\": {\n    \"active\": false,\n    \"mockingEnabled\": true,\n    \"certPath\": \"\",\n    \"keyPath\": \"\",\n    \"mount\": \"/\"\n  },\n  \"tlsOptions\": {\n    \"enabled\": false,\n    \"type\": \"CERT\",\n    \"pfxPath\": \"\",\n    \"certPath\": \"\",\n    \"keyPath\": \"\",\n    \"passphrase\": \"\"\n  },\n  \"data\": []\n}
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "default": true
+        },
+        {
+          "uuid": "response-pessoa-list-error",
+          "body": "{\n  \"error\": \"Internal Server Error\",\n  \"message\": \"Foi gerada uma exce\u00e7\u00e3o no servidor\",\n  \"timestamp\": \"2026-05-19T15:14:09Z\"\n}",
+          "latency": 300,
+          "statusCode": 500,
+          "label": "Server Error",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE"
+        }
+      ]
+    },
+    {
+      "uuid": "route-pessoa-create",
+      "type": "http",
+      "documentation": "Cria uma nova pessoa",
+      "method": "post",
+      "endpoint": "/pessoa",
+      "responses": [
+        {
+          "uuid": "response-pessoa-create-error",
+          "body": "{\n  \"error\": \"Validation Error\",\n  \"message\": \"O nome deve ter entre 3 e 255 caracteres\"\n}",
+          "latency": 100,
+          "statusCode": 400,
+          "label": "Validation Error",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "nome",
+              "value": "^.{0,2}$",
+              "invert": false,
+              "operator": "regex"
+            }
+          ]
+        },
+        {
+          "uuid": "response-pessoa-create-success",
+          "body": "{\n  \"id\": 6,\n  \"nome\": \"{{body 'nome'}}\"\n}",
+          "latency": 150,
+          "statusCode": 200,
+          "label": "Created Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "default": true
+        }
+      ]
+    },
+    {
+      "uuid": "route-pessoa-getbyid",
+      "type": "http",
+      "documentation": "Retorna uma pessoa espec\u00edfica",
+      "method": "get",
+      "endpoint": "/pessoa/:id",
+      "responses": [
+        {
+          "uuid": "response-pessoa-getbyid-notfound",
+          "body": "{\n  \"error\": \"Not Found\",\n  \"message\": \"Pessoa com id 999 n\u00e3o encontrada\"\n}",
+          "latency": 50,
+          "statusCode": 404,
+          "label": "Not Found",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "id",
+              "value": "999",
+              "invert": false,
+              "operator": "equals"
+            }
+          ]
+        },
+        {
+          "uuid": "response-pessoa-getbyid-success",
+          "body": "{\n  \"id\": 1,\n  \"nome\": \"Jo\u00e3o Silva\"\n}",
+          "latency": 80,
+          "statusCode": 200,
+          "label": "Found Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "default": true
+        }
+      ]
+    },
+    {
+      "uuid": "route-pessoa-update",
+      "type": "http",
+      "documentation": "Atualiza uma pessoa",
+      "method": "put",
+      "endpoint": "/pessoa/:id",
+      "responses": [
+        {
+          "uuid": "response-pessoa-update-notfound",
+          "body": "{\n  \"error\": \"Not Found\",\n  \"message\": \"Pessoa com id 999 n\u00e3o encontrada\"\n}",
+          "latency": 50,
+          "statusCode": 404,
+          "label": "Not Found",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "id",
+              "value": "999",
+              "invert": false,
+              "operator": "equals"
+            }
+          ]
+        },
+        {
+          "uuid": "response-pessoa-update-success",
+          "body": "{\n  \"id\": 1,\n  \"nome\": \"Jo\u00e3o Silva Atualizado\"\n}",
+          "latency": 120,
+          "statusCode": 200,
+          "label": "Updated Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "default": true
+        }
+      ]
+    },
+    {
+      "uuid": "route-pessoa-delete",
+      "type": "http",
+      "documentation": "Deleta uma pessoa",
+      "method": "delete",
+      "endpoint": "/pessoa/:id",
+      "responses": [
+        {
+          "uuid": "response-pessoa-delete-notfound",
+          "body": "{\n  \"error\": \"Not Found\",\n  \"message\": \"Pessoa com id 999 n\u00e3o encontrada\"\n}",
+          "latency": 50,
+          "statusCode": 404,
+          "label": "Not Found",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "id",
+              "value": "999",
+              "invert": false,
+              "operator": "equals"
+            }
+          ]
+        },
+        {
+          "uuid": "response-pessoa-delete-success",
+          "body": "",
+          "latency": 100,
+          "statusCode": 200,
+          "label": "Deleted Success",
+          "headers": [],
+          "bodyType": "INLINE",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "proxyMode": false,
+  "proxySettings": {
+    "active": false,
+    "mockingEnabled": true,
+    "certPath": "",
+    "keyPath": "",
+    "mount": "/"
+  },
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "passphrase": ""
+  },
+  "data": []
+}
