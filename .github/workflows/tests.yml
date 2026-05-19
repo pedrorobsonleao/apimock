@@ -1,0 +1,75 @@
+name: API Tests
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mockoon:
+        image: mockoon/cli:latest
+        options: >-
+          --health-cmd "curl -f http://localhost:3000/pessoa || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 3000:3000
+        volumes:
+          - ./mockoon-environment.json:/mockoon/environment.json
+        env:
+          LOG_LEVEL: debug
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Esperar API estar pronta
+        run: |
+          timeout 60 bash -c 'until curl -f http://localhost:3000/pessoa; do sleep 2; done'
+
+      - name: Executar testes
+        run: npm test
+        env:
+          API_URL: http://localhost:3000
+
+      - name: Upload relatório de testes
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: reports/
+          retention-days: 30
+
+      - name: Comentar no PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const reports = fs.readdirSync('./reports/').filter(f => f.endsWith('.json'));
+            if (reports.length > 0) {
+              const report = JSON.parse(fs.readFileSync(`./reports/${reports[0]}`, 'utf8'));
+              const passRate = ((report.passed / report.total) * 100).toFixed(1);
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `## 📊 Teste Results\n\n` +
+                      `✅ Passed: ${report.passed}/${report.total}\n` +
+                      `❌ Failed: ${report.failed}/${report.total}\n` +
+                      `📈 Pass Rate: ${passRate}%`
+              });
+            }

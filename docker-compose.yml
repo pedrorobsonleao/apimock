@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  mockoon-api:
+    image: mockoon/cli:latest
+    container_name: api-mock-pessoa
+    hostname: mockoon-api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./mockoon-environment.json:/mockoon/environment.json:ro
+    environment:
+      LOG_LEVEL: "debug"
+    command: ["-d", "/mockoon/environment.json", "-p", "3000"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/pessoa"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - api-network
+
+  # Serviço opcional de teste automatizado
+  test-runner:
+    image: node:18-alpine
+    container_name: api-test-runner
+    depends_on:
+      mockoon-api:
+        condition: service_healthy
+    volumes:
+      - ./test-cases.json:/app/test-cases.json:ro
+      - ./tests:/app/tests:ro
+      - ./reports:/app/reports
+    working_dir: /app
+    environment:
+      API_URL: "http://mockoon-api:3000"
+      LOG_LEVEL: "debug"
+    command: >
+      sh -c "
+      npm install axios && 
+      node /app/tests/run-tests.js
+      "
+    restart: "no"
+    networks:
+      - api-network
+
+  # Serviço de documentação Swagger (opcional)
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    container_name: api-swagger-docs
+    ports:
+      - "8080:8080"
+    environment:
+      SWAGGER_JSON: /swagger.json
+      API_URL: "http://localhost:3000"
+    volumes:
+      - ./swagger.json:/swagger.json:ro
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge

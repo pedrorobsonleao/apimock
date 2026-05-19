@@ -1,0 +1,282 @@
+{
+  "loginTestCases": [
+    {
+      "id": "login_001",
+      "name": "Login com credenciais válidas",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3000/login",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "username": "admin",
+          "password": "password123"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 200,
+        "body": {
+          "type": "Bearer",
+          "expiresIn": 3600
+        }
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "login_002",
+      "name": "Login com credenciais inválidas",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3000/login",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "username": "admin",
+          "password": "wrongpassword"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 401,
+        "body": {
+          "error": "Credenciais inválidas"
+        }
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "login_003",
+      "name": "Login com usuário vazio",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3000/login",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "username": "",
+          "password": "password123"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 400
+      },
+      "timeout": 5000
+    }
+  ],
+  "pessoaTestCases": [
+    {
+      "id": "pessoa_001",
+      "name": "Listar todas as pessoas com sucesso",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/pessoa",
+        "headers": {
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 200,
+        "bodyType": "array",
+        "minLength": 5
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "pessoa_002",
+      "name": "Listar pessoas sem autenticação",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/pessoa"
+      },
+      "expectedResponse": {
+        "statusCode": 403,
+        "body": {
+          "error": "Forbidden"
+        }
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "pessoa_003",
+      "name": "Criar pessoa com dados válidos",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3000/pessoa",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        },
+        "body": {
+          "nome": "Teste Silva"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 200,
+        "body": {
+          "id": 6,
+          "nome": "Teste Silva"
+        }
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "pessoa_004",
+      "name": "Criar pessoa com nome muito curto",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3000/pessoa",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer token"
+        },
+        "body": {
+          "nome": "AB"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 400,
+        "body": {
+          "error": "Validation Error"
+        }
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "pessoa_005",
+      "name": "Obter pessoa por ID com sucesso",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/pessoa/1",
+        "headers": {
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 200,
+        "body": {
+          "id": 1,
+          "nome": "João Silva"
+        }
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "pessoa_006",
+      "name": "Obter pessoa com ID inexistente",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/pessoa/999",
+        "headers": {
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 404,
+        "body": {
+          "error": "Not Found"
+        }
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "pessoa_007",
+      "name": "Atualizar pessoa com sucesso",
+      "request": {
+        "method": "PUT",
+        "url": "http://localhost:3000/pessoa/1",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer token"
+        },
+        "body": {
+          "nome": "João Silva Atualizado"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 200,
+        "body": {
+          "id": 1,
+          "nome": "João Silva Atualizado"
+        }
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "pessoa_008",
+      "name": "Atualizar pessoa com ID inexistente",
+      "request": {
+        "method": "PUT",
+        "url": "http://localhost:3000/pessoa/999",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer token"
+        },
+        "body": {
+          "nome": "Novo Nome"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 404,
+        "body": {
+          "error": "Not Found"
+        }
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "pessoa_009",
+      "name": "Deletar pessoa com sucesso",
+      "request": {
+        "method": "DELETE",
+        "url": "http://localhost:3000/pessoa/1",
+        "headers": {
+          "Authorization": "Bearer token"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 200
+      },
+      "timeout": 5000
+    },
+    {
+      "id": "pessoa_010",
+      "name": "Deletar pessoa com ID inexistente",
+      "request": {
+        "method": "DELETE",
+        "url": "http://localhost:3000/pessoa/999",
+        "headers": {
+          "Authorization": "Bearer token"
+        }
+      },
+      "expectedResponse": {
+        "statusCode": 404,
+        "body": {
+          "error": "Not Found"
+        }
+      },
+      "timeout": 5000
+    }
+  ],
+  "testDataSets": {
+    "validPessoas": [
+      { "id": 1, "nome": "João Silva" },
+      { "id": 2, "nome": "Maria Santos" },
+      { "id": 3, "nome": "Pedro Oliveira" },
+      { "id": 4, "nome": "Ana Costa" },
+      { "id": 5, "nome": "Carlos Ferreira" }
+    ],
+    "invalidPessoas": [
+      { "nome": "AB" },
+      { "nome": "" },
+      { "nome": null },
+      { "nome": "a".repeat(256) }
+    ],
+    "loginCredentials": [
+      { "username": "admin", "password": "password123" },
+      { "username": "user", "password": "user123" },
+      { "username": "test", "password": "test123" }
+    ]
+  }
+}

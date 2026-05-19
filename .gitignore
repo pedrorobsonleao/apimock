@@ -1,0 +1,31 @@
+# Relatórios e dados gerados
+reports/
+*.html
+*.json.bak
+
+# Node modules
+node_modules/
+package-lock.json
+npm-debug.log
+
+# Docker
+.dockerignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ambiente
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testes
+.nyc_output/
+coverage/

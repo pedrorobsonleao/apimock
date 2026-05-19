@@ -1,0 +1,35 @@
+{
+  "name": "api-mock-pessoa",
+  "version": "1.0.0",
+  "description": "API Mock Server com Mockoon e Testes Automatizados",
+  "main": "tests/run-tests.js",
+  "scripts": {
+    "test": "node tests/run-tests.js",
+    "test:watch": "nodemon tests/run-tests.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:test": "docker-compose up --abort-on-container-exit test-runner",
+    "docker:logs": "docker-compose logs -f mockoon-api",
+    "docker:clean": "docker-compose down -v",
+    "docker:rebuild": "docker-compose down && docker-compose build --no-cache && docker-compose up -d"
+  },
+  "keywords": [
+    "mockoon",
+    "api",
+    "mock",
+    "testing",
+    "swagger",
+    "openapi"
+  ],
+  "author": "Test Specialist",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
