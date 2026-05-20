@@ -6,12 +6,12 @@
   "scripts": {
     "test": "node tests/run-tests.js",
     "test:watch": "nodemon tests/run-tests.js",
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down",
-    "docker:test": "docker-compose up --abort-on-container-exit test-runner",
-    "docker:logs": "docker-compose logs -f mockoon-api",
-    "docker:clean": "docker-compose down -v",
-    "docker:rebuild": "docker-compose down && docker-compose build --no-cache && docker-compose up -d"
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:test": "docker compose up --abort-on-container-exit test-runner",
+    "docker:logs": "docker compose logs -f mockoon-api",
+    "docker:clean": "docker compose down -v",
+    "docker:rebuild": "docker compose down && docker compose build --no-cache && docker compose up -d"
   },
   "keywords": [
     "mockoon",

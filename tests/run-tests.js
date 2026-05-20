@@ -3,8 +3,16 @@ const fs = require('fs');
 const path = require('path');
 
 const API_URL = process.env.API_URL || 'http://localhost:3000';
-const TEST_CASES_FILE = '/app/test-cases.json';
-const REPORTS_DIR = '/app/reports';
+
+// Smart path resolution: Use /app paths in Docker, current directory locally
+let TEST_CASES_FILE = '/app/test-cases.json';
+let REPORTS_DIR = '/app/reports';
+
+// If running locally (file doesn't exist in /app), use current directory
+if (!fs.existsSync(TEST_CASES_FILE)) {
+  TEST_CASES_FILE = path.join(process.cwd(), 'test-cases.json');
+  REPORTS_DIR = path.join(process.cwd(), 'reports');
+}
 
 const colors = {
   reset: '\x1b[0m',
