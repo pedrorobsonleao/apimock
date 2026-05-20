@@ -24,10 +24,7 @@
           "statusCode": 200,
           "label": "OK",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "default": true
@@ -48,10 +45,7 @@
           "statusCode": 400,
           "label": "Empty Username",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -71,10 +65,7 @@
           "statusCode": 401,
           "label": "Invalid Credentials",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -94,10 +85,7 @@
           "statusCode": 200,
           "label": "Login Success",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "default": true
@@ -118,10 +106,7 @@
           "statusCode": 200,
           "label": "List Success",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "default": true
@@ -133,10 +118,7 @@
           "statusCode": 403,
           "label": "No Authorization",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -165,10 +147,7 @@
           "statusCode": 400,
           "label": "Short Name",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -188,10 +167,28 @@
           "statusCode": 200,
           "label": "Created",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
+          ],
+          "bodyType": "INLINE",
+          "default": true
+        }
+      ]
+    },
+    {
+      "uuid": "route-pessoa-getbyid-notfound",
+      "type": "http",
+      "documentation": "Retorna 404 para ID inexistente",
+      "method": "get",
+      "endpoint": "/pessoa/999",
+      "responses": [
+        {
+          "uuid": "response-pessoa-getbyid-notfound",
+          "body": "{\"error\": \"Not Found\", \"message\": \"Pessoa nao encontrada\"}",
+          "latency": 50,
+          "statusCode": 404,
+          "label": "Not Found",
+          "headers": [
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "default": true
@@ -206,39 +203,34 @@
       "endpoint": "/pessoa/:id",
       "responses": [
         {
-          "uuid": "response-pessoa-getbyid-notfound",
-          "body": "{\"error\": \"Not Found\", \"message\": \"Pessoa nao encontrada\"}",
-          "latency": 50,
-          "statusCode": 404,
-          "label": "Not Found",
-          "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
-          ],
-          "bodyType": "INLINE",
-          "rules": [
-            {
-              "target": "param",
-              "modifier": "id",
-              "value": "^(999|[6-9][0-9]{2,}|[0-9]{4,})$",
-              "invert": false,
-              "operator": "regex"
-            }
-          ]
-        },
-        {
           "uuid": "response-pessoa-getbyid-success",
           "body": "{\"id\": 1, \"nome\": \"João Silva\"}",
           "latency": 80,
           "statusCode": 200,
           "label": "Found",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
+          ],
+          "bodyType": "INLINE",
+          "default": true
+        }
+      ]
+    },
+    {
+      "uuid": "route-pessoa-updatebyid-notfound",
+      "type": "http",
+      "documentation": "Retorna 404 para ID inexistente",
+      "method": "put",
+      "endpoint": "/pessoa/999",
+      "responses": [
+        {
+          "uuid": "response-pessoa-updatebyid-notfound",
+          "body": "{\"error\": \"Not Found\", \"message\": \"Pessoa nao encontrada\"}",
+          "latency": 50,
+          "statusCode": 404,
+          "label": "Not Found",
+          "headers": [
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "default": true
@@ -253,39 +245,34 @@
       "endpoint": "/pessoa/:id",
       "responses": [
         {
-          "uuid": "response-pessoa-update-notfound",
-          "body": "{\"error\": \"Not Found\", \"message\": \"Pessoa nao encontrada\"}",
-          "latency": 50,
-          "statusCode": 404,
-          "label": "Not Found",
-          "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
-          ],
-          "bodyType": "INLINE",
-          "rules": [
-            {
-              "target": "param",
-              "modifier": "id",
-              "value": "^(999|[6-9][0-9]{2,}|[0-9]{4,})$",
-              "invert": false,
-              "operator": "regex"
-            }
-          ]
-        },
-        {
           "uuid": "response-pessoa-update-success",
           "body": "{\"id\": 1, \"nome\": \"João Silva Atualizado\"}",
           "latency": 100,
           "statusCode": 200,
           "label": "Updated",
           "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
+            {"key": "Content-Type", "value": "application/json"}
+          ],
+          "bodyType": "INLINE",
+          "default": true
+        }
+      ]
+    },
+    {
+      "uuid": "route-pessoa-deletebyid-notfound",
+      "type": "http",
+      "documentation": "Retorna 404 para ID inexistente",
+      "method": "delete",
+      "endpoint": "/pessoa/999",
+      "responses": [
+        {
+          "uuid": "response-pessoa-deletebyid-notfound",
+          "body": "{\"error\": \"Not Found\", \"message\": \"Pessoa nao encontrada\"}",
+          "latency": 50,
+          "statusCode": 404,
+          "label": "Not Found",
+          "headers": [
+            {"key": "Content-Type", "value": "application/json"}
           ],
           "bodyType": "INLINE",
           "default": true
@@ -299,29 +286,6 @@
       "method": "delete",
       "endpoint": "/pessoa/:id",
       "responses": [
-        {
-          "uuid": "response-pessoa-delete-notfound",
-          "body": "{\"error\": \"Not Found\", \"message\": \"Pessoa nao encontrada\"}",
-          "latency": 50,
-          "statusCode": 404,
-          "label": "Not Found",
-          "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
-          ],
-          "bodyType": "INLINE",
-          "rules": [
-            {
-              "target": "param",
-              "modifier": "id",
-              "value": "^(999|[6-9][0-9]{2,}|[0-9]{4,})$",
-              "invert": false,
-              "operator": "regex"
-            }
-          ]
-        },
         {
           "uuid": "response-pessoa-delete-success",
           "body": "",
