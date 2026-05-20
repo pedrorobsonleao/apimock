@@ -1,4 +1,4 @@
-version: '3.8'
+#version: '3.8'
 
 services:
   mockoon-api:
@@ -14,7 +14,7 @@ services:
     command: ["-d", "/mockoon/environment.json", "-p", "3000"]
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/pessoa"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 10s
       timeout: 5s
       retries: 5

@@ -11,6 +11,30 @@
   "logLevel": "debug",
   "routes": [
     {
+      "uuid": "route-health",
+      "type": "http",
+      "documentation": "Health check endpoint",
+      "method": "get",
+      "endpoint": "/health",
+      "responses": [
+        {
+          "uuid": "response-health-ok",
+          "body": "{\"status\": \"ok\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "default": true
+        }
+      ]
+    },
+    {
       "uuid": "route-auth-login",
       "type": "http",
       "documentation": "Autenticacao do usuario",
@@ -24,7 +48,10 @@
           "statusCode": 400,
           "label": "Empty Username",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -44,7 +71,10 @@
           "statusCode": 401,
           "label": "Invalid Credentials",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -64,7 +94,10 @@
           "statusCode": 200,
           "label": "Login Success",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -85,7 +118,10 @@
           "statusCode": 200,
           "label": "List Success",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -97,7 +133,10 @@
           "statusCode": 403,
           "label": "No Authorization",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -126,7 +165,10 @@
           "statusCode": 400,
           "label": "Short Name",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -146,7 +188,10 @@
           "statusCode": 200,
           "label": "Created",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -167,7 +212,10 @@
           "statusCode": 404,
           "label": "Not Found",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -187,7 +235,10 @@
           "statusCode": 200,
           "label": "Found",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -208,7 +259,10 @@
           "statusCode": 404,
           "label": "Not Found",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -228,7 +282,10 @@
           "statusCode": 200,
           "label": "Updated",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -249,7 +306,10 @@
           "statusCode": 404,
           "label": "Not Found",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
