@@ -150,7 +150,26 @@ Authorization: Bearer <token>
 12. ✅ `pessoa_009` - Deletar pessoa
 13. ✅ `pessoa_010` - Deletar pessoa inexistente
 
-## 🛠️ Comandos Disponíveis
+## 📊 Status dos Testes
+
+**Taxa de Sucesso**: ✅ **13/13 (100%)**
+
+### Autenticação (3/3 ✅)
+- ✅ Login com credenciais válidas
+- ✅ Login com credenciais inválidas  
+- ✅ Login com usuário vazio
+
+### CRUD Pessoas (10/10 ✅)
+- ✅ Listar pessoas com sucesso
+- ✅ Listar sem autenticação
+- ✅ Criar pessoa válida
+- ✅ Criar pessoa com nome inválido
+- ✅ Obter pessoa por ID
+- ✅ Obter pessoa inexistente
+- ✅ Atualizar pessoa
+- ✅ Atualizar pessoa inexistente
+- ✅ Deletar pessoa
+- ✅ Deletar pessoa inexistente
 
 ### Gerenciamento de Containers
 

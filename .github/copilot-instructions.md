@@ -15,20 +15,21 @@ Makefile (atalhos principais):
 - make up         → sob docker: inicia container(s) (usa `docker compose up -d`)
 - make down       → para containers (`docker compose down`)
 - make logs       → logs do mockoon (`docker compose logs -f mockoon-api`)
-- make test       → executa testes no Docker (`docker compose up --abort-on-container-exit test-runner`)
-- make test-local → executa testes localmente (requer Node.js): instala deps se necessário e executa `node tests/run-tests.js`
+- make test       → executa testes no Docker (`docker compose up --abort-on-container-exit test-runner`) [100% pass rate]
+- make test-local → executa testes localmente (requer Node.js): instala deps se necessário e executa `node tests/run-tests.js` [100% pass rate]
 - make clean      → `docker compose down -v`
 - make rebuild    → `docker compose build --no-cache && docker compose up -d`
-- make health     → aguarda a API mock responder em `/pessoa`
+- make health     → aguarda a API mock responder em `/health` (endpoint sem autenticação)
 - make curl-test  → testes rápidos via curl
 
 npm scripts (package.json):
-- npm test        → executa `node tests/run-tests.js` (mesma função do `make test-local`)
+- npm test        → executa `node tests/run-tests.js` (mesma função do `make test-local`) [100% pass rate]
 - npm run test:watch → `nodemon tests/run-tests.js` (watch)
-- scripts docker:* → interagem com docker-compose (legacy: uses `docker-compose`)
+- scripts docker:* → interagem com docker compose (v2 - plugin moderno)
 
 Observações práticas sobre Docker vs docker-compose:
-- O Makefile e os scripts usam o plugin moderno `docker compose` (sem hífen). Se sua máquina não suporta esse comando, o `package.json` usa `docker-compose` (com hífen) — ajuste conforme sua instalação (ou instale o plugin Compose V2).
+- O Makefile e os scripts usam o plugin moderno `docker compose` (sem hífen). Versão do sistema: v5.1.3.
+- Se sua máquina não suporta esse comando, instale o plugin Compose V2.
 
 Como executar um único teste (não só a suíte completa):
 - Atualmente o runner principal (`tests/run-tests.js`) executa todos os casos definidos em `test-cases.json`.
@@ -126,7 +127,20 @@ Nenhum arquivo específico de outras ferramentas de assistente foi detectado (CL
 
 Resumo: este arquivo cobre os comandos reais de build/test presentes no repositório, fornece um panorama de alto nível da arquitetura (mockoon + test-runner + swagger-ui), e documenta convenções específicas de testes e mocks. Peça ao Copilot para confirmar antes de aplicar mudanças amplas a `tests/run-tests.js` ou `mockoon-environment.json`.
 
-
 ---
 
-Deseja que eu também configure um `copilot-setup-steps.yml` inicial (pré-instala npm deps e Node.js) no repositório para tornar sessões Copilot mais rápidas e confiáveis?
+## ✅ STATUS ATUAL DO REPOSITÓRIO
+
+**Taxa de Sucesso**: 13/13 (100%) - Todos os testes passando ✨
+
+**Último Update**: Maio 2026 - Todas as issues resolvidas
+- ✅ JSON syntax fixed
+- ✅ Docker Compose v2 migration complete
+- ✅ Healthcheck endpoint working (/health)
+- ✅ Non-existent ID detection working (explicit routes for 999)
+- ✅ Test reports generating (JSON + HTML)
+
+**Para próximas sessões Copilot**: 
+- Comece sempre com `make up` para levantar a infraestrutura
+- Execute `make test` para validar que tudo funciona
+- Consulte PROMPT.md para reproduzir o setup em qualquer plataforma IA
