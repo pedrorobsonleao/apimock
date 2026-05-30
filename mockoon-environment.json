@@ -24,7 +24,26 @@
           "statusCode": 200,
           "label": "OK",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -45,7 +64,26 @@
           "statusCode": 400,
           "label": "Empty Username",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -65,7 +103,26 @@
           "statusCode": 401,
           "label": "Invalid Credentials",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -85,7 +142,26 @@
           "statusCode": 200,
           "label": "Login Success",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -106,7 +182,26 @@
           "statusCode": 200,
           "label": "List Success",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -118,7 +213,26 @@
           "statusCode": 403,
           "label": "No Authorization",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -147,7 +261,26 @@
           "statusCode": 400,
           "label": "Short Name",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "rules": [
@@ -167,7 +300,26 @@
           "statusCode": 200,
           "label": "Created",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -188,7 +340,26 @@
           "statusCode": 404,
           "label": "Not Found",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -209,7 +380,26 @@
           "statusCode": 200,
           "label": "Found",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -230,7 +420,26 @@
           "statusCode": 404,
           "label": "Not Found",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -251,7 +460,26 @@
           "statusCode": 200,
           "label": "Updated",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -272,7 +500,26 @@
           "statusCode": 404,
           "label": "Not Found",
           "headers": [
-            {"key": "Content-Type", "value": "application/json"}
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
           ],
           "bodyType": "INLINE",
           "default": true
@@ -292,7 +539,24 @@
           "latency": 80,
           "statusCode": 200,
           "label": "Deleted",
-          "headers": [],
+          "headers": [
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, Accept"
+            },
+            {
+              "key": "Access-Control-Max-Age",
+              "value": "3600"
+            }
+          ],
           "bodyType": "INLINE",
           "default": true
         }
